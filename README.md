@@ -1,6 +1,6 @@
-# akka-source-queue-bug #
+# akka-source-queue-example #
 
-Welcome to akka-source-queue-bug!
+Welcome to akka-source-queue-example! An example is in the tests.
 
 ## Contribution policy ##
 
