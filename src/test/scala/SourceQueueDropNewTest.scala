@@ -6,6 +6,7 @@ import akka.stream.QueueOfferResult
 import akka.stream.testkit.scaladsl.TestSink
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import akka.stream.Attributes
 
 class SourceQueueDropNewTest extends munit.FunSuite {
 
@@ -19,6 +20,13 @@ class SourceQueueDropNewTest extends munit.FunSuite {
     val (queue, probe) = Source
       .queue[Int](queueBufferSize, OverflowStrategy.dropNew, concurrentOffers)
       .log("queue")
+      .addAttributes(
+        Attributes.logLevels(
+          onElement = Attributes.LogLevels.Info,
+          onFinish = Attributes.LogLevels.Info,
+          onFailure = Attributes.LogLevels.Error
+        )
+      )
       // .groupBy(1, _ => 0)
       // .mergeSubstreams
       .toMat(TestSink.probe[Int])(Keep.both)
