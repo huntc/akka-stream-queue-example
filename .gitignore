@@ -24,6 +24,9 @@ target
 .ensime_lucene
 .ensime_cache
 
+# VS Code
+*.code-workspace
+
 # Mac
 .DS_Store
 
@@ -41,3 +44,4 @@ snapshots
 # Metals
 .metals
 .bloop
+metals.sbt

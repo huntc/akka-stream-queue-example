@@ -9,9 +9,12 @@ lazy val `akka-source-queue-bug` =
     .settings(commonSettings)
     .settings(
       libraryDependencies ++= Seq(
-        library.munit           % Test,
-        library.munitScalaCheck % Test,
-      ),
+        library.akkaSlf4j,
+        library.akkaStream,
+        library.akkaStreamTestkit % Test,
+        library.munit             % Test,
+        library.munitScalaCheck   % Test
+      )
     )
 
 // *****************************************************************************
@@ -21,10 +24,14 @@ lazy val `akka-source-queue-bug` =
 lazy val library =
   new {
     object Version {
+      val akka  = "2.6.9"
       val munit = "0.7.19"
     }
-    val munit           = "org.scalameta" %% "munit"            % Version.munit
-    val munitScalaCheck = "org.scalameta" %% "munit-scalacheck" % Version.munit
+    val akkaSlf4j         = "com.typesafe.akka" %% "akka-slf4j"          % Version.akka
+    val akkaStream        = "com.typesafe.akka" %% "akka-stream"         % Version.akka
+    val akkaStreamTestkit = "com.typesafe.akka" %% "akka-stream-testkit" % Version.akka
+    val munit             = "org.scalameta"     %% "munit"               % Version.munit
+    val munitScalaCheck   = "org.scalameta"     %% "munit-scalacheck"    % Version.munit
   }
 
 // *****************************************************************************
@@ -36,15 +43,17 @@ lazy val commonSettings =
     scalaVersion := "2.13.4",
     organization := "au.com.titanclass",
     organizationName := "Titan Class P/L",
+    licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
     startYear := Some(2020),
     scalacOptions ++= Seq(
       "-unchecked",
       "-deprecation",
       "-language:_",
-      "-encoding", "UTF-8",
-      "-Ywarn-unused:imports",
+      "-encoding",
+      "UTF-8",
+      "-Ywarn-unused:imports"
     ),
     testFrameworks += new TestFramework("munit.Framework"),
     scalafmtOnCompile := true,
-    Compile / compile / wartremoverWarnings ++= Warts.unsafe,
-)
+    Compile / compile / wartremoverWarnings ++= Warts.unsafe
+  )
